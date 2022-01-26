@@ -19,6 +19,7 @@
 
 - [Summary](#summary)
 - [Introduction](#introduction)
+- [Method](#Method)
 - [Results](#results)
 - [Files and Usage](#files-and-usage)
 - [References and credits](#references-and-credits)
@@ -29,7 +30,7 @@
 
 <h2 id="summary"> :book: Summary </h2>
 
-? 
+?
 
 <br />
 
@@ -37,6 +38,15 @@
 
 
 <h2 id="introduction"> :book: Introduction </h2>
+
+? 
+
+<br />
+
+
+![-----------------------------------------------------](https://user-images.githubusercontent.com/62880315/143689276-058e2ec4-98ac-4367-863d-5334b959bb44.png)
+
+<h2 id="method"> :book: Method </h2>
 
 ? 
 
