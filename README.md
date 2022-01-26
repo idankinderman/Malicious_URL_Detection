@@ -61,6 +61,21 @@
 
 <br />
 
+<br />
+
+<br />
+
+<br />
+
+
+| The model | Test accuracy | Number of parameters | Number of epochs | Train time | Inference time |
+| ---------------- |:-----------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|
+| LSTM | 84.25% | 14,474 | 21 | 3 hours and 11 minutes | 0.01 seconds |
+| Transformer | 93.39% | 11,890 | 10 | 51 minutes | 0.003 seconds |
+
+
+<br />
+
 ![-----------------------------------------------------](https://user-images.githubusercontent.com/62880315/143689276-058e2ec4-98ac-4367-863d-5334b959bb44.png)
 
 
