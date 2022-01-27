@@ -8,13 +8,11 @@
   </p>
 
 <br />
-<br />
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/62880315/146927482-173cfd4d-2386-47da-92a3-e362f93f241a.gif" alt="animated" />
 </p>
 
-<br />
 <br />
 
 - [Summary](#summary)
@@ -85,7 +83,6 @@ Therefore, we conclude that our project requires a method which examines the URL
 
 <h2 id="the-models"> :computer: The Models </h2>
 
-<br />
 
 We implemented, trained and evaluated two models. A LSTM classifier network (FC and SoftMax layers concatenated to a LSTM network’s last hidden state), and a Transformer classifier, using same concatenation of layers at output for classification.
 
@@ -134,7 +131,6 @@ We changed the model’s hyper-parameters so it will contain more learned parame
 <p align="center">
 <img src="https://user-images.githubusercontent.com/62880315/151404904-e5ea89b4-12ea-4792-8679-859916a58c21.png" align="center" alt="Parameters maps" width="750" height="250">
 </p>
-
 
 
 <br />
