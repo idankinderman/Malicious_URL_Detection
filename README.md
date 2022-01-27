@@ -156,6 +156,17 @@ For running the models, you can run the files transformer.py or LSTM.py, with yo
 
 <br />
 
+Prerequisites
+|Library         | Version |
+|--------------------|----|
+|`Python`|  `3.5.5 (Anaconda)`|
+|`torch`| `1.10.1`|
+|`numpy`| `1.19.5`|
+|`matplotlib`| `3.3.4`|
+|`tensorboard`| `2.7.0`|
+
+<br />
+
 ![-----------------------------------------------------](https://user-images.githubusercontent.com/62880315/143689276-058e2ec4-98ac-4367-863d-5334b959bb44.png)
 
 <h2 id="references-and-credits"> :raised_hands: References and credits</h2>
