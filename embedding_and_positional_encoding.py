@@ -5,7 +5,7 @@ from preprocessing import accepted_chars
 
 
 class PositionalEncoding(nn.Module):
-    def __init__(self, num_hiddens, dropout, max_len=2000):
+    def __init__(self, num_hiddens, dropout, max_len=2500):
         super(PositionalEncoding, self).__init__()
         self.dropout = nn.Dropout(dropout)
         # Create a long enough `P`

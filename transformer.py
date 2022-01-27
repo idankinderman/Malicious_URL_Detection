@@ -9,6 +9,7 @@ from preprocessing import BuildDataLoaderNoTokenizatie
 from training_and_evaluating import Train, DrawGraphs
 from embedding_and_positional_encoding import Embeddings
 
+
 class MultiHeadAttention(nn.Module):
     def __init__(self, d_model, num_heads, dropout, d_input=None):
         super().__init__()
@@ -52,16 +53,16 @@ class MultiHeadAttention(nn.Module):
 
         
     def split_heads(self, x, batch_size):
-        """
-        Split the last dimension into (heads X depth)
-        Return after transpose to put in shape (batch_size X num_heads X seq_length X d_k)
-        """
+        
+        #Split the last dimension into (heads X depth)
+        #Return after transpose to put in shape (batch_size X num_heads X seq_length X d_k)
+    
         return x.view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
 
     def group_heads(self, x, batch_size):
-        """
-        Combine the heads again to get (batch_size X seq_length X (num_heads times d_k))
-        """
+        
+        #Combine the heads again to get (batch_size X seq_length X (num_heads times d_k))
+        
         return x.transpose(1, 2).contiguous().view(batch_size, -1, self.num_heads * self.d_k)
     
 
@@ -84,9 +85,9 @@ class MultiHeadAttention(nn.Module):
         
         return H, A
 
-"""
-1-D (1x1) Convolution: an MLP with one hidden layer and ReLU activation applied to each and every element in the set.
-"""
+
+#1-D (1x1) Convolution: an MLP with one hidden layer and ReLU activation applied to each and every element in the set.
+
 class CNN(nn.Module):
     def __init__(self, d_model, hidden_dim):
         super().__init__()
@@ -129,7 +130,7 @@ class EncoderLayer(nn.Module):
         return out2
 
 class TransformerEncoder(nn.Module):
-    def __init__(self, num_layers, d_model, num_heads, ff_hidden_dim, dropout=0.1):
+    def __init__(self, num_layers, d_model, num_heads, conv_hidden_dim, dropout=0.1):
         super().__init__()
 
         self.d_model = d_model
@@ -139,7 +140,7 @@ class TransformerEncoder(nn.Module):
 
         self.enc_layers = nn.ModuleList()
         for _ in range(num_layers):
-            self.enc_layers.append(EncoderLayer(d_model, num_heads, ff_hidden_dim, self.dropout))
+            self.enc_layers.append(EncoderLayer(d_model, num_heads, conv_hidden_dim, self.dropout))
         
     def forward(self, x):
         x = self.embedding(x) # Transform to (batch_size, input_seq_length, d_model)
@@ -147,31 +148,38 @@ class TransformerEncoder(nn.Module):
             x = self.enc_layers[i](x)
 
         return x  # (batch_size, input_seq_len, d_model)
-    
+  
 # Transormer classifier for sentiment analysis
 class TransformerClassifier(nn.Module):
-    def __init__(self, num_layers, d_model, num_heads, conv_hidden_dim, num_answers):
+    def __init__(self, num_layers, d_model, num_heads, conv_hidden_dim, num_answers=2, dropout=0.1):
         super().__init__()
         
-        self.encoder = TransformerEncoder(num_layers, d_model, num_heads, conv_hidden_dim)
+        self.encoder = TransformerEncoder(num_layers, d_model, num_heads, conv_hidden_dim, dropout)
+        #encoder_layer = nn.TransformerEncoderLayer(d_model=d_model, nhead=num_heads)
+        #self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
         self.dense = nn.Linear(d_model, num_answers)
+        self.softmax = nn.Softmax()
 
     def forward(self, x):
         x = self.encoder(x)
         x, _ = torch.max(x, dim=1)
         x = self.dense(x)
+        x = self.softmax(x) 
         return x
 
-train_dataloader, val_dataloader, test_dataloader = BuildDataLoaderNoTokenizatie(url_num=20, batch_size=128, num_classes=2)
-model = TransformerClassifier(num_layers=2, d_model=16, num_heads=8, conv_hidden_dim=256, num_answers=2)
+train_dataloader, val_dataloader, test_dataloader = BuildDataLoaderNoTokenizatie(url_num=120_000, batch_size=16, num_classes=2)
+model = TransformerClassifier(num_layers=2, d_model=32, num_heads=16, conv_hidden_dim=128, num_answers=2)
 loss = f.cross_entropy
 optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
 
 pytorch_total_params = sum(p.numel() for p in model.parameters())
 print("The model have", pytorch_total_params, "parameters")
 start = time.time()
-train_loss, train_acc, validation_acc = Train(model, train_dataloader, val_dataloader, test_dataloader, loss,
-                                              optimizer, epochs=15)
+train_loss, train_acc, validation_acc, validation_acc_focus = Train(model, train_dataloader, val_dataloader, test_dataloader, loss,
+                                              optimizer, epochs=17, focus_start=100, focus_end=99)
 end = time.time()
 print("The training took", '{:.6}'.format(end - start) ,"seconds")
-DrawGraphs(train_loss, train_acc, validation_acc)
+DrawGraphs(train_loss, train_acc, validation_acc, validation_acc_focus, "Transformer")
+
+
+
