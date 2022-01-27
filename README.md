@@ -163,7 +163,6 @@ Prerequisites
 |`torch`| `1.10.1`|
 |`numpy`| `1.19.5`|
 |`matplotlib`| `3.3.4`|
-|`tensorboard`| `2.7.0`|
 
 <br />
 
