@@ -30,7 +30,7 @@
 <h2 id="summary"> :book: Summary </h2>
 
 In this project, we implemented and tested DL models which classify URLs as malicious or benign, based solely on lexicographical analysis of the addresses.
-We created our own embedding layer which maps chars from our dataset to vector representations, and we integrated it with two different models (LSTM and transformer).
+We used an embedding layer which maps chars from our dataset to vector representations, and we integrated it with two different models (LSTM and transformer).
 From comparison of their results we concluded that the Transformer is more suitable for our task, so we created a bigger version of it which reached accuracy of 94.8% on the test set.
 
 <br />
@@ -67,7 +67,7 @@ Moreover, after splitting the addresses, we’ll see that many of these words ar
 
 <br />
 
-Therefore, we conclude that our project requires a method which examines the URLs char-by-char, rather than word-by-word. Hence, we created an Embedding layer to map valid chars from our dataset to vector representations.
+Therefore, we conclude that our project requires a method which examines the URLs char-by-char, rather than word-by-word. Hence, we used an Embedding layer to map valid chars from our dataset to vector representations.
 
 <br />
 
