@@ -25,20 +25,20 @@ class LSTM_classifier(nn.Module):
         x = self.softmax(x)
         return x
         
-
-train_dataloader, val_dataloader, test_dataloader = BuildDataLoaderNoTokenizatie(url_num=60_000, batch_size=128, num_classes=2)
-model = LSTM_classifier(d_model=8, hidd_size=32, lstm_depth=2, num_answers=2)
-pytorch_total_params = sum(p.numel() for p in model.parameters())
-loss = f.cross_entropy
-optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
-
-print("The model have", pytorch_total_params, "parameters")
-start = time.time()
-train_loss, train_acc, validation_acc, validation_acc_focus = Train(model, train_dataloader, val_dataloader, 
-                                                                    test_dataloader, loss, optimizer, epochs=24, 
-                                                                    focus_start=25, focus_end=24)
-end = time.time()
-print("\nThe training took", '{:.6}'.format(end - start) ,"seconds")
-DrawGraphs(train_loss, train_acc, validation_acc, validation_acc_focus, model_name="LSTM")
-print("\n\n\ntesting mode:")
-
+if __name__ == '__main__':
+    train_dataloader, val_dataloader, test_dataloader = BuildDataLoaderNoTokenizatie(url_num=60_000, batch_size=128, num_classes=2)
+    model = LSTM_classifier(d_model=8, hidd_size=32, lstm_depth=2, num_answers=2)
+    pytorch_total_params = sum(p.numel() for p in model.parameters())
+    loss = f.cross_entropy
+    optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
+    
+    print("The model have", pytorch_total_params, "parameters")
+    start = time.time()
+    train_loss, train_acc, validation_acc, validation_acc_focus = Train(model, train_dataloader, val_dataloader, 
+                                                                        test_dataloader, loss, optimizer, epochs=24, 
+                                                                        focus_start=25, focus_end=24)
+    end = time.time()
+    print("\nThe training took", '{:.6}'.format(end - start) ,"seconds")
+    DrawGraphs(train_loss, train_acc, validation_acc, validation_acc_focus, model_name="LSTM")
+    print("\n\n\ntesting mode:")
+    
