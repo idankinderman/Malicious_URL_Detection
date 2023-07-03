@@ -88,33 +88,33 @@ def objective(trial):
 
 
 
-
-# now we can run the experiment
-sampler = optuna.samplers.TPESampler()
-study = optuna.create_study(study_name="transformer URL", direction="maximize", sampler=sampler)
-study.optimize(objective, n_trials=200)
-
-pruned_trials = [t for t in study.trials if t.state == optuna.trial.TrialState.PRUNED]
-complete_trials = [t for t in study.trials if t.state == optuna.trial.TrialState.COMPLETE]
-
-print("Study statistics: ")
-print("  Number of finished trials: ", len(study.trials))
-print("  Number of pruned trials: ", len(pruned_trials))
-print("  Number of complete trials: ", len(complete_trials))
-
-print("\n\n\nBest trial:")
-trial = study.best_trial
-
-print("  Value: ", trial.value)
-
-print("  Params: ")
-for key, value in trial.params.items():
-    print("    {}: {}".format(key, value))
+if __name__ == '__main__':
+    # now we can run the experiment
+    sampler = optuna.samplers.TPESampler()
+    study = optuna.create_study(study_name="transformer URL", direction="maximize", sampler=sampler)
+    study.optimize(objective, n_trials=200)
     
-optuna.visualization.plot_param_importances(study)
-
-optuna.visualization.plot_contour(study, params=["num_layers", "num_heads"])
-optuna.visualization.plot_contour(study, params=["d_model", "conv_hidden_dim"])
-optuna.visualization.plot_contour(study, params=["lr", "dropout"])
-optuna.visualization.plot_contour(study, params=["num_layers", "d_model"])
-optuna.visualization.plot_contour(study, params=["num_heads", "conv_hidden_dim"])
+    pruned_trials = [t for t in study.trials if t.state == optuna.trial.TrialState.PRUNED]
+    complete_trials = [t for t in study.trials if t.state == optuna.trial.TrialState.COMPLETE]
+    
+    print("Study statistics: ")
+    print("  Number of finished trials: ", len(study.trials))
+    print("  Number of pruned trials: ", len(pruned_trials))
+    print("  Number of complete trials: ", len(complete_trials))
+    
+    print("\n\n\nBest trial:")
+    trial = study.best_trial
+    
+    print("  Value: ", trial.value)
+    
+    print("  Params: ")
+    for key, value in trial.params.items():
+        print("    {}: {}".format(key, value))
+        
+    optuna.visualization.plot_param_importances(study)
+    
+    optuna.visualization.plot_contour(study, params=["num_layers", "num_heads"])
+    optuna.visualization.plot_contour(study, params=["d_model", "conv_hidden_dim"])
+    optuna.visualization.plot_contour(study, params=["lr", "dropout"])
+    optuna.visualization.plot_contour(study, params=["num_layers", "d_model"])
+    optuna.visualization.plot_contour(study, params=["num_heads", "conv_hidden_dim"])
