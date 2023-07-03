@@ -167,19 +167,20 @@ class TransformerClassifier(nn.Module):
         x = self.softmax(x) 
         return x
 
-train_dataloader, val_dataloader, test_dataloader = BuildDataLoaderNoTokenizatie(url_num=120_000, batch_size=16, num_classes=2)
-model = TransformerClassifier(num_layers=2, d_model=32, num_heads=16, conv_hidden_dim=128, num_answers=2)
-loss = f.cross_entropy
-optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
-
-pytorch_total_params = sum(p.numel() for p in model.parameters())
-print("The model have", pytorch_total_params, "parameters")
-start = time.time()
-train_loss, train_acc, validation_acc, validation_acc_focus = Train(model, train_dataloader, val_dataloader, test_dataloader, loss,
-                                              optimizer, epochs=17, focus_start=100, focus_end=99)
-end = time.time()
-print("The training took", '{:.6}'.format(end - start) ,"seconds")
-DrawGraphs(train_loss, train_acc, validation_acc, validation_acc_focus, "Transformer")
+if __name__ == '__main__':
+    train_dataloader, val_dataloader, test_dataloader = BuildDataLoaderNoTokenizatie(url_num=120_000, batch_size=16, num_classes=2)
+    model = TransformerClassifier(num_layers=2, d_model=32, num_heads=16, conv_hidden_dim=128, num_answers=2)
+    loss = f.cross_entropy
+    optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
+    
+    pytorch_total_params = sum(p.numel() for p in model.parameters())
+    print("The model have", pytorch_total_params, "parameters")
+    start = time.time()
+    train_loss, train_acc, validation_acc, validation_acc_focus = Train(model, train_dataloader, val_dataloader, test_dataloader, loss,
+                                                  optimizer, epochs=17, focus_start=100, focus_end=99)
+    end = time.time()
+    print("The training took", '{:.6}'.format(end - start) ,"seconds")
+    DrawGraphs(train_loss, train_acc, validation_acc, validation_acc_focus, "Transformer")
 
 
 
